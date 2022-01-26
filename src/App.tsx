@@ -1,6 +1,7 @@
 import React from "react";
 import CardList from "./components/CardList";
 import SearchBar from "./components/SearchBar";
+import ErrorBoundry from "./containers/ErrorBoundry";
 import Scroll from "./containers/Scroll";
 import robots, { RobotType } from "./data/robot";
 
@@ -39,10 +40,12 @@ class App extends React.Component<Props, State> {
         <SearchBar
           searchfield={this.state.searchfield}
           searchChange={this.onSearchChange}
-        ></SearchBar>
-        <Scroll>
-          <CardList robots={filteredRobots} />
-        </Scroll>
+        ></SearchBar> 
+        <ErrorBoundry>
+          <Scroll>
+            <CardList robots={filteredRobots} />
+          </Scroll>
+        </ErrorBoundry>
       </div>
     );
   }
