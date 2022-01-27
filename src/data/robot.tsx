@@ -25,11 +25,5 @@ const robots = [
   }
 ];
 
-export interface RobotType {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
 
 export default robots;

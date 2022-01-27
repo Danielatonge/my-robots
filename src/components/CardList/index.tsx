@@ -1,23 +1,26 @@
 import React from "react";
-import Card, { CardProps } from "../Card";
+import Card from "../Card";
+import { RobotType as CardProps } from "../../types";
 
 type CardListProps = {
-  robots: CardProps[];
+  robots: CardProps[] | null;
 };
 
 const CardList = (cardList: CardListProps) => {
   const { robots } = cardList;
-  const renderCardList = robots.map(({ id, name, username, email }) => {
-    return (
-      <Card
-        key={id}
-        id={id}
-        name={name}
-        username={username}
-        email={email}
-      ></Card>
-    );
-  });
+  const renderCardList =
+    robots &&
+    robots.map(({ id, name, username, email }) => {
+      return (
+        <Card
+          key={id}
+          id={id}
+          name={name}
+          username={username}
+          email={email}
+        ></Card>
+      );
+    });
   return <div>{renderCardList}</div>;
 };
 

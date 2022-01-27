@@ -1,54 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CardList from "./components/CardList";
 import SearchBar from "./components/SearchBar";
 import ErrorBoundry from "./containers/ErrorBoundry";
 import Scroll from "./containers/Scroll";
-import robots, { RobotType } from "./data/robot";
+import robotData from "./data/robot";
+import { RobotType } from "./types";
 
-interface State {
-  robots: RobotType[] | null;
-  searchfield: string;
-  searchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+function App() {
+  const [robots, setRobots] = useState<RobotType[] | null>(null);
+  const [searchfield, setSearchfield] = useState("");
+  useEffect(() => {
+    setRobots(robotData);
+  }, []);
 
-interface Props {}
-class App extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      robots: null,
-      searchfield: "",
-      searchChange: () => {}
-    };
-  }
-
-  componentDidMount() {
-    this.setState({ robots: robots });
-  }
-  onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchfield: event.target.value });
+  const onSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchfield(event.target.value);
     console.log(event.target.value);
   };
 
-  render() {
-    const filteredRobots = robots.filter((robot) =>
-      robot.name.toLocaleLowerCase().includes(this.state.searchfield)
+  const filteredRobots =
+    robots &&
+    robots.filter((robot: RobotType) =>
+      robot.name.toLocaleLowerCase().includes(searchfield)
     );
-    return (
-      <div className="tc">
-        <h1>RoboFriends</h1>
-        <SearchBar
-          searchfield={this.state.searchfield}
-          searchChange={this.onSearchChange}
-        ></SearchBar>
-        <Scroll>
-          <ErrorBoundry>
-            <CardList robots={filteredRobots} />
-          </ErrorBoundry>
-        </Scroll>
-      </div>
-    );
-  }
+
+  return (
+    <div className="tc">
+      <h1>RoboFriends</h1>
+      <SearchBar
+        searchfield={searchfield}
+        searchChange={onSearchChange}
+      ></SearchBar>
+      <Scroll>
+        <ErrorBoundry>
+          <CardList robots={filteredRobots} />
+        </ErrorBoundry>
+      </Scroll>
+    </div>
+  );
 }
 
 export default App;

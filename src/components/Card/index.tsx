@@ -1,11 +1,5 @@
 import React from "react";
-
-export type CardProps = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-};
+import { RobotType as CardProps } from "../../types";
 
 const Card = (card: CardProps) => {
   const { name, id, email } = card;
