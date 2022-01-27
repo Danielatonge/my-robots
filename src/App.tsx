@@ -40,12 +40,12 @@ class App extends React.Component<Props, State> {
         <SearchBar
           searchfield={this.state.searchfield}
           searchChange={this.onSearchChange}
-        ></SearchBar> 
-        <ErrorBoundry>
-          <Scroll>
+        ></SearchBar>
+        <Scroll>
+          <ErrorBoundry>
             <CardList robots={filteredRobots} />
-          </Scroll>
-        </ErrorBoundry>
+          </ErrorBoundry>
+        </Scroll>
       </div>
     );
   }
